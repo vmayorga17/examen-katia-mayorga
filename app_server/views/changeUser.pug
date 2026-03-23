@@ -1,0 +1,182 @@
+doctype html
+html(lang="en" class="h-100")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    meta(name="description" content="")
+    link(rel="shortcut icon" href="../favicon.ico")
+    title Examen de Medio Semestre - Desarrollo web 3
+
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js")
+
+    style.
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      input[readonly] {
+        background-color: #f4ebeb;
+        color: #555;
+        border: 1px solid #ccc;
+        cursor: not-allowed;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+    link(href="../stylesheets/cover.css" rel="stylesheet")
+
+  body.d-flex.h-100.text-center.text-white.bg-dark
+    .cover-container.d-flex.w-100.h-100.p-3.mx-auto.flex-column
+      header.mb-auto
+        div
+          h3.float-md-start.mb-0 Examen No. 1
+          nav.nav.nav-masthead.justify-content-center.float-md-end
+            a.nav-link(href="/") Inicio
+            a.nav-link(href="/addUser") Añadir Usuarios
+            a.nav-link.active(aria-current="page" href="/changeUser") Modificar Usuarios
+
+      main.inner.cover.bg-dark(role="main")
+        hr(style="background-color: white;")
+        h1.text-center Modificación de usuarios
+
+        form.form-inline.mt-2.mt-md-0(action="/users/search" method="get")
+          .row.g-3.align-items-center
+            .col-auto
+              label.col-form-label(for="inputBusquedaUsuario") Ingrese el Código/Nombre de usuario a modificar
+            .col-auto
+              input#inputBusquedaUsuario.form-control.mr-sm-2.ml-sm-2(
+                type="text"
+                name="identificacion"
+                placeholder="Código de usuario"
+                aria-label="Buscar"
+              )
+            .col-auto
+              button.btn.btn-outline-light.my-2.mx-2(type="submit") Buscar
+              span#buscarAyuda.form-text.ml-md-2
+                | Puede ingresar caracteres alfanuméricos
+
+        hr(style="background-color: white;")
+
+        .row
+          .col-md-12
+            .card
+              .card-body.bg-secondary
+                form(action=(usuario ? '/users/update/' + usuario._id : '#') method="post" role="form").row.g-3
+                  .col-md-6
+                    label.form-label(for="inputNombreEdit") Nombre
+                    input#inputNombreEdit.form-control(
+                      type="text"
+                      name="nombre"
+                      placeholder="Ingrese el nombre del usuario"
+                      value=(usuario ? usuario.nombre : '')
+                    )
+
+                  .col-md-6
+                    label.form-label(for="inputApellidoEdit") Apellido
+                    input#inputApellidoEdit.form-control(
+                      type="text"
+                      name="apellido"
+                      placeholder="Ingrese el apellido del usuario"
+                      value=(usuario ? usuario.apellido : '')
+                    )
+
+                  .col-md-6
+                    label.form-label(for="inputDireccionEdit") Dirección
+                    input#inputDireccionEdit.form-control(
+                      type="text"
+                      name="direccion"
+                      placeholder="Ingrese la dirección del usuario"
+                      value=(usuario ? usuario.direccion : '')
+                    )
+
+                  .col-md-6
+                    label.form-label(for="inputEmailEdit") email
+                    input#inputEmailEdit.form-control(
+                      type="text"
+                      name="email"
+                      placeholder="Ingrese el email del usuario"
+                      readonly
+                    )
+
+                  .col-md-4
+                    label.form-label(for="inputIdentificacionEdit") Identificación
+                    input#inputIdentificacionEdit.form-control(
+                      type="number"
+                      name="identificacion"
+                      placeholder="Ingrese la identificación del usuario"
+                      value=(usuario ? usuario.identificacion : '')
+                    )
+
+                  .col-md-4
+                    label.form-label(for="inputEdadEdit") Edad
+                    input#inputEdadEdit.form-control(
+                      type="number"
+                      name="edad"
+                      placeholder="Ingrese la edad del usuario"
+                      value=(usuario ? usuario.edad : '')
+                    )
+
+                  .col-md-4
+                    label.form-label(for="inputTelefonoEdit") Teléfono
+                    input#inputTelefonoEdit.form-control(
+                      type="number"
+                      name="telefono"
+                      placeholder="Ingrese el teléfono del usuario"
+                      value=(usuario ? usuario.telefono : '')
+                    )
+
+                  .col-md-6
+                    .col-md-12.mb-3
+                      label.form-label(for="selectTipoEdit") Tipo de Materia
+                      select#selectTipoEdit.form-select(name="tipo")
+                        option(value="Presencial" selected=(usuario && usuario.materias && usuario.materias.tipo === 'Presencial')) Presencial
+                        option(value="Virtual" selected=(usuario && usuario.materias && usuario.materias.tipo === 'Virtual')) Virtual
+
+                    .col-md-12.mb-3
+                      label.form-label(for="inputCarreraEdit") Carrera
+                      input#inputCarreraEdit.form-control(
+                        type="text"
+                        name="carrera"
+                        placeholder="Ingrese el nombre de la carrera"
+                        readonly
+                      )
+
+                    .col-md-12.mb-3
+                      label.form-label(for="inputFechaEdit") Fecha de Creación
+                      input#inputFechaEdit.form-control(
+                        type="date"
+                        name="creado"
+                        value=(usuario && usuario.creado ? usuario.creado.substring(0,10) : '')
+                      )
+
+                  .col-md-6.d-flex.mb-3
+                    label.col-md-3.col-form-label(for="selectMateriasEdit") Materias
+                    select#selectMateriasEdit.form-select(name="nombres" multiple aria-label="multiple select materias")
+                      option(value="Desarrollo web 1" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Desarrollo web 1'))) Desarrollo web 1
+                      option(value="Desarrollo web 2" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Desarrollo web 2'))) Desarrollo web 2
+                      option(value="Desarrollo web 3" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Desarrollo web 3'))) Desarrollo web 3
+                      option(value="Fotografía 1" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Fotografía 1'))) Fotografía 1
+                      option(value="Fotografía 2" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Fotografía 2'))) Fotografía 2
+                      option(value="Fotografía 3" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Fotografía 3'))) Fotografía 3
+                      option(value="Periodismo 1" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Periodismo 1'))) Periodismo 1
+                      option(value="Periodismo 2" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Periodismo 2'))) Periodismo 2
+                      option(value="Periodismo 3" selected=(usuario && usuario.materias && usuario.materias.nombres && usuario.materias.nombres.includes('Periodismo 3'))) Periodismo 3
+
+                  button.btn.btn-dark.btn-outline-secondary(type="submit" disabled=(!usuario)) Modificar Usuario
+
+        hr(style="background-color: white;")
+
+      footer.mt-auto.text-white-50
+        p
+          | Desarrollo web 3 
+          a.text-danger(href="https://www.usfq.edu.ec/es" target="_blank") USFQ
+          | , Examen de medio semestre.
