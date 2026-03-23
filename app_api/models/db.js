@@ -15,7 +15,7 @@ if (process.platform === "win32") {
 }
 
 // conectar a la base de datos MongoDB
-let dbURI = 'mongodb://localhost/dw3-202520'; // cadena de conexión 
+let dbURI = 'mongodb+srv://vmayorga_db_user:vdbeyu4MEDkiljsL@skillycluster.gjrx3wo.mongodb.net/dw3-202520?retryWrites=true&w=majority'; // cadena de conexión 
 if (process.env.NODE_ENV === 'production') {
     dbURI = process.env.MONGODB_URI; // cadena de conexión de Heroku
 }

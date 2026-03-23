@@ -4,6 +4,10 @@ const apiOptions = {
     server: 'http://localhost:3000'
 };
 
+if (process.env.NODE_ENV === 'production') {
+    apiOptions.server = 'https://examen-katia-mayorga.onrender.com';
+}
+
 const renderAddUser = (req, res) => {
     res.render('addUser', {
         title: 'Añadir Usuarios'
